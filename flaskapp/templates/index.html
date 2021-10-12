@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <!--Plugin CSS file with desired skin-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"
+    />
+    <!--jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!--Plugin JavaScript file-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <!--farbstastic-->
+    <script src="https://cdn.jsdelivr.net/npm/farbstastic@1.3.0/farbtastic.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/farbstastic@1.3.0/farbtastic.css">
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <style>
+      .input-container:not(.input-container-inline) {
+        width: 300px;
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-4 well">
+
+          <div class="form-group input-container">
+            <label class="control-label" for="ncyclides">Number of cyclides</label>
+            <input
+              id="ncyclides"
+              type="number"
+              class="form-control"
+              value="3"
+              min="1"
+              step="1"
+            />
+          </div>
+
+          <div class="form-group input-container">
+            <label class="control-label">Value of &phi;</label>
+            <input type="text" id="phi" />
+          </div>
+          
+          <div class="form-group input-container">
+            <label class="control-label">Color</label>
+            <input type="text" id="color" name="color" value="#a23456" />
+          </div>
+          <div id="colorpicker"></div>
+        </div>
+
+        <div class="col-sm-8">
+          <br/>
+          <img src="" id="myimg" />
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function AJAX(color, ncyclides, phi) {
+      $.ajax({
+        url: "{{ url_for ('get_img') }}",
+        type: "GET",
+        data: {
+          color: color,
+          ncyclides: ncyclides,
+          phi: phi
+        },
+        success: function (response) {
+          console.log("REsPONSE", response);
+          $("#myimg").attr("src", "/static/images/" + response);
+        },
+        error: function (xhr) {
+          console.log("ERROR");
+        }
+      });
+    }
+    $(document).ready(function () {
+      AJAX("#a23456", $("#ncyclides").val(), 1.1);
+      $("#phi").ionRangeSlider({
+        skin: "big",
+        min: 1,
+        max: 1.4,
+        step: 0.01,
+        from: 1.1,
+        //            onChange: function (data) {
+        //                nchange++;
+        //                $nchange.html(nchange);
+        //            },
+        onFinish: function (data) {
+          AJAX($("#color").val(), $("#ncyclides").val(), data.from);
+        }
+      });
+      $("#colorpicker").farbtastic("#color");
+
+      $("#colorpicker,#ncyclides").on("change", function () {
+        AJAX(
+          $("#color").val(),
+          $("#ncyclides").val(),
+          $("#phi").val()
+        );
+      });
+    });
+  </script>
+</html>
