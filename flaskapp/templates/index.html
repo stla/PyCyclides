@@ -50,7 +50,7 @@
           
           <div class="form-group input-container">
             <label class="control-label">Color</label>
-            <input type="text" id="color" name="color" value="#a23456" />
+            <input type="text" id="color" name="color" readonly value="#a23456" />
           </div>
           <div id="colorpicker"></div>
         </div>
@@ -97,9 +97,16 @@
           AJAX($("#color").val(), $("#ncyclides").val(), data.from);
         }
       });
-      $("#colorpicker").farbtastic("#color");
+      $("#colorpicker").farbtastic(function callback(color) {
+          $("#color").val(color);
+          AJAX(
+              color,
+              $("#ncyclides").val(),
+              $("#phi").val()
+          );          
+      });
 
-      $("#colorpicker,#ncyclides").on("change", function () {
+      $("#ncyclides").on("change", function () {
         AJAX(
           $("#color").val(),
           $("#ncyclides").val(),

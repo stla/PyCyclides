@@ -36,7 +36,7 @@ def get_img():
     meshes = linkedCyclides(int(ncyclides), phi)
 
     # generate screenshot
-    filename = f"Cyclides-phi{int(100*phi)}-n{ncyclides}-{color[1:6]}.png"
+    filename = f"Cyclides-phi{int(100*phi)}-n{ncyclides}-{color[1:]}.png"
     filepath = os.path.join(static_image_path, filename)
     plotter = pv.Plotter(window_size=(500, 500), off_screen=True)
     for mesh in meshes:
