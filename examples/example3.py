@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import pyvista as pv
-import vtk
 from pycyclides.cyclide import linkedCyclides
 
 lcs = linkedCyclides(6, 1.2)
