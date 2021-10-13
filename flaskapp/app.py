@@ -41,6 +41,6 @@ def get_img():
     plotter = pv.Plotter(window_size=(500, 500), off_screen=True)
     for mesh in meshes:
         plotter.add_mesh(mesh, smooth_shading=True, color=color, specular=5)
-    plotter.set_position([0, 26, 0])
+    plotter.camera.position=(0,29,0)
     plotter.show(screenshot=filepath)
     return filename  # os.path.join("images", filename)
