@@ -4,7 +4,7 @@ import numpy as np
 from pycyclides.cyclide import linkedCyclides
 
 palettes = ["viridis", "magma", "inferno", "plasma", "cividis"]
-lcs = linkedCyclides(5, 1.1)
+lcs = linkedCyclides(5, 0.9)
 pl = pv.Plotter()
 for i,c in enumerate(lcs):
     c.point_data["distance"] = np.linalg.norm(c.points, axis=1)
